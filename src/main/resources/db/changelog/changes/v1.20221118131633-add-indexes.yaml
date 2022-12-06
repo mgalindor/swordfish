@@ -1,0 +1,11 @@
+databaseChangeLog:
+  - changeSet:
+      id: 831b45f6-737e-41b0-a2c6-7b7e797eea8a
+      author: mgldrz@gmail.com
+      comment: rpd-2 Add indexes
+      changes:
+        - sql:
+            dbms: 'PostgreSQL'
+            sql: CREATE INDEX idx_als_aliases ON tx_aliases USING GIN ((details -> 'aliases'));
+        - sql:
+            sql: CREATE INDEX idx_als_document_value ON tx_aliases (document_value);

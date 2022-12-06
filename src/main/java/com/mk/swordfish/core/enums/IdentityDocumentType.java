@@ -1,0 +1,5 @@
+package com.mk.swordfish.core.enums;
+
+public enum IdentityDocumentType {
+  CURP, RFC, INE
+}

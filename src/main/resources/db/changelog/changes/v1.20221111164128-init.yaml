@@ -1,0 +1,43 @@
+databaseChangeLog:
+  - preConditions:
+      - onFail: WARN
+      - onError: WARN
+      - not:
+          tableExists:
+            tableName: tx_aliases
+  - changeSet:
+      id: 2ea08c71-4f62-45c4-acce-ccab6ce3dd06
+      author: mgldrz@gmail.com
+      comment: rpd-1 Init database
+      changes:
+        - createTable:
+            tableName: tx_aliases
+            columns:
+              - column:
+                  name: id
+                  type: varchar(36)
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: firstname
+                  type: varchar(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: lastname
+                  type: varchar(50)
+              - column:
+                  name: dob
+                  type: date
+              - column:
+                  name: document_value
+                  type: varchar(20)
+              - column:
+                  name: document_type
+                  type: varchar(20)
+              - column:
+                  name: details
+                  type: jsonb
+                  constraints:
+                    nullable: false
