@@ -96,3 +96,5 @@ docker {
     files "$buildDir/libs/${project.name}-${project.version}.jar"
     dockerfile file("$projectDir/Dockerfile")
 }
+
+task npm_lint(type:Exec) {commandLine 'cmd', '/c', 'init.bat'}
