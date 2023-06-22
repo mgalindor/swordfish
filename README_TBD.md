@@ -1,7 +1,7 @@
 # swordfish
 Is a hexagonal base project design as a template for future projects.
 
-
+## Features
 It include
 - AOP Transaction Manager
 - @Behavior annptation to use instead @Service
@@ -14,9 +14,11 @@ It include
 - Configuracion de Jackson Money to handle currency objects at controllers
 - Enum validations for Request objects 
 - Basic Controller Advice for mos common exceptions
+- Mapstruct to mapp Domain Objects to Ports I/O
 
-Scafolding example
+## Scafolding example
 
+```
 java/com/mk/swordfish
 |  core/
 |  |  annotations/
@@ -45,3 +47,4 @@ java/com/mk/swordfish
 |  |  config/
 |  |  properties/
 |  Application.java
+```
