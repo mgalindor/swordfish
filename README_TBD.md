@@ -14,3 +14,34 @@ It include
 - Configuracion de Jackson Money to handle currency objects at controllers
 - Enum validations for Request objects 
 - Basic Controller Advice for mos common exceptions
+
+Scafolding example
+
+java/com/mk/swordfish
+|  core/
+|  |  annotations/
+|  |  domain/
+|  |  enums/
+|  |  exceptions/
+|  |  service/
+|  ports/
+|  |  primary/
+|  |  |  rs/
+|  |  |  | Controller.java
+|  |  |  | Requests.java
+|  |  |  | Response.java
+|  |  |  |  ControllerAdvice.java
+|  |  secondary/
+|  |  | jpa/
+|  |  | | AdapterJpaImpl.java
+|  |  | | JpaRepository.java
+|  |  | | Entity.java
+|  |  | mongo/
+|  |  | redis/
+|  |  | rs/
+|  |  PortInterface.java
+|  spring/
+|  |  aspect/
+|  |  config/
+|  |  properties/
+|  Application.java
