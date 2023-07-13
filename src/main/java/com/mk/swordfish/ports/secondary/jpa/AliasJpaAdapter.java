@@ -1,6 +1,6 @@
 package com.mk.swordfish.ports.secondary.jpa;
 
-import com.mk.swordfish.core.domain.AliasDO;
+import com.mk.swordfish.core.domain.AliasDo;
 import com.mk.swordfish.ports.secondary.AliasPort;
 import com.mk.swordfish.ports.secondary.jpa.entity.AliasEntity;
 import com.mk.swordfish.ports.secondary.jpa.mapper.AliasJpaMapper;
@@ -20,8 +20,8 @@ public class AliasJpaAdapter implements AliasPort {
 
   @Override
   @NewSpan
-  public AliasDO createAlias(AliasDO aliasDO) {
-    AliasEntity alias = aliasJpaRepository.save(aliasJpaMapper.toEntity(aliasDO));
+  public AliasDo createAlias(AliasDo aliasDo) {
+    AliasEntity alias = aliasJpaRepository.save(aliasJpaMapper.toEntity(aliasDo));
     return aliasJpaMapper.toDomain(alias);
   }
 

@@ -1,15 +1,12 @@
 package com.mk.swordfish.ports.primary.rs;
 
-import static io.vavr.API.$;
-import static io.vavr.API.Case;
-import static io.vavr.API.Match;
-import static io.vavr.Predicates.instanceOf;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import com.mk.swordfish.core.exceptions.BusinessErrorException;
 import com.mk.swordfish.core.exceptions.ResourceNotFoundException;
+import java.net.URL;
 import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.Locale;
@@ -31,6 +28,11 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import static io.vavr.API.$;
+import static io.vavr.API.Case;
+import static io.vavr.API.Match;
+import static io.vavr.Predicates.instanceOf;
+
 @Slf4j
 @RestControllerAdvice
 @RequiredArgsConstructor
@@ -40,7 +42,8 @@ public class RsControllerAdvice {
   public static final String INVALID_FORMAT = "invalid.format.exception";
   public static final String JSON_MAPPING = "json.mapping.exception";
   public static final String JSON_PARSE = "json.parse.exception";
-  public static final String HTTP_MEDIA_TYPE_NOT_SUPPORTED = "http.media.type.not.supported.exception";
+  public static final String HTTP_MEDIA_TYPE_NOT_SUPPORTED
+      = "http.media.type.not.supported.exception";
   public static final String CONSTRAINT_VIOLATION = "constraint.violation.exception";
   public static final String METHOD_ARGUMENT_NOT_VALID = "method.argument.not.valid.exception";
 
@@ -83,8 +86,9 @@ public class RsControllerAdvice {
         ),
         Case($(), cause -> getLocalizedMessage(HTTP_MESSAGE_NOT_READABLE)));
     if (e.getCause() != null) {
-      log.info("HttpMessageNotReadableException cause:[{}] message:[{}]",
-          e.getCause().getClass().getName(), e.getCause().getMessage());
+      String errorName = e.getCause().getClass().getName();
+      String errorMessage = e.getCause().getMessage();
+      log.info("HttpMessageNotReadableException cause:[{}] message:[{}]", errorName, errorMessage);
     }
 
     return defaultErrorResponseBuilder(request, HttpStatus.BAD_REQUEST)
@@ -97,8 +101,7 @@ public class RsControllerAdvice {
       return "";
     } else {
       return references.stream().map(ref ->
-          ref.getIndex() != -1 ?
-              "[" + ref.getIndex() + "]" : "." + ref.getFieldName()
+          ref.getIndex() != -1 ? "[" + ref.getIndex() + "]" : "." + ref.getFieldName()
       ).collect(Collectors.joining()).substring(1);
     }
   }
@@ -117,8 +120,8 @@ public class RsControllerAdvice {
   ErrorResponse onConstraintValidationException(ConstraintViolationException e,
       HttpServletRequest request) {
     // On validating requests with @Valid
-    List<LocationResponse> details = e.getConstraintViolations().stream().
-        map(violation -> new LocationResponse(violation.getPropertyPath().toString(),
+    List<LocationResponse> details = e.getConstraintViolations().stream()
+        .map(violation -> new LocationResponse(violation.getPropertyPath().toString(),
             violation.getMessage()))
         .collect(Collectors.toList());
 

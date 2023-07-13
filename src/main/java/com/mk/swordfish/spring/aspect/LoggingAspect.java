@@ -36,6 +36,7 @@ public class LoggingAspect {
     // Method is empty as this is just a Pointcut, the implementations are in the advices.
   }
 
+  @SuppressWarnings("PMD.AvoidCatchingThrowable")
   @Around("applicationPackagePointcut() && springBeanPointcut() && execution(* *(..))")
   public Object logAround(ProceedingJoinPoint joinPoint) throws Throwable {
     MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
@@ -59,9 +60,10 @@ public class LoggingAspect {
               if (throwable == null) {
                 log.debug("Out [{}.{}]", className, methodName);
               } else {
+                String errorClass = throwable.getClass().getCanonicalName();
+                String errorMessage = throwable.getMessage();
                 log.debug("Out [{}.{}] Exception:[{}] Message:[{}]", className, methodName,
-                    throwable.getClass(),
-                    throwable.getMessage());
+                    errorClass, errorMessage);
               }
             });
       } else {
@@ -70,9 +72,10 @@ public class LoggingAspect {
       return result;
 
     } catch (Throwable e) {
+      String errorClass = e.getClass().getCanonicalName();
+      String errorMessage = e.getMessage();
       log.debug("Out [{}]:[{}] Exception:[{}][{}]", className, methodName,
-          e.getClass(),
-          e.getMessage());
+          errorClass, errorMessage);
       throw e;
     }
   }

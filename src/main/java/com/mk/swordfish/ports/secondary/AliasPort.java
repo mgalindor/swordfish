@@ -1,14 +1,14 @@
 package com.mk.swordfish.ports.secondary;
 
-import com.mk.swordfish.core.domain.AliasDO;
+import com.mk.swordfish.core.domain.AliasDo;
 import java.util.List;
 
 public interface AliasPort {
 
 
-  AliasDO createAlias(AliasDO aliasDO);
+  AliasDo createAlias(AliasDo aliasDo);
 
   boolean existsByAlias(List<String> aliases);
 
-  boolean existsByDocumentValueAndDocumentType(String documentValue,String documentType);
+  boolean existsByDocumentValueAndDocumentType(String documentValue, String documentType);
 }

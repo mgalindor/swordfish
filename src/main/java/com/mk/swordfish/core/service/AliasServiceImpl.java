@@ -1,9 +1,9 @@
 package com.mk.swordfish.core.service;
 
 import com.mk.swordfish.core.annotations.Behavior;
-import com.mk.swordfish.core.domain.AliasDO;
+import com.mk.swordfish.core.domain.AliasDo;
 import com.mk.swordfish.core.exceptions.BusinessErrorException;
-import com.mk.swordfish.core.exceptions.ErrorCodes;
+import com.mk.swordfish.core.exceptions.ErrorCodeConstants;
 import com.mk.swordfish.ports.secondary.AliasPort;
 import com.mk.swordfish.ports.secondary.ExchangePort;
 import java.util.Optional;
@@ -20,11 +20,11 @@ public class AliasServiceImpl implements AliasService {
 
   @Override
   @NewSpan
-  public AliasDO createAlias(AliasDO alias) {
+  public AliasDo createAlias(AliasDo alias) {
 
     if (aliasPort.existsByDocumentValueAndDocumentType(alias.getIdentityDocument().getValue(),
         alias.getIdentityDocument().getType())) {
-      throw new BusinessErrorException(ErrorCodes.DOCUMENT_EXIST);
+      throw new BusinessErrorException(ErrorCodeConstants.DOCUMENT_EXIST);
     }
 
     alias.getAccounts().stream().forEach(accountDO -> {
@@ -33,9 +33,11 @@ public class AliasServiceImpl implements AliasService {
       accountDO.setLimit(eur);
     });
     // ! Because this method use PG ?| operator is not posible to be used with JPA nor native query
-//    if (aliasPort.existsByAlias(alias.getAliases())) {
-//      throw new BusinessErrorException(ErrorCodes.ALIAS_EXIST);
-//    }
+    /*
+    if (aliasPort.existsByAlias(alias.getAliases())) {
+      throw new BusinessErrorException(ErrorCodes.ALIAS_EXIST);
+    }
+    */
 
     return aliasPort.createAlias(alias);
   }

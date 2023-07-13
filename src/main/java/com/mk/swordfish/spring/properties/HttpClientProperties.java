@@ -52,8 +52,6 @@ public class HttpClientProperties {
 
     @DurationUnit(ChronoUnit.SECONDS)
     private Duration defaultKeepAlive = Duration.ofSeconds(HTTP_KEEP_ALIVE);
-    ;
-
   }
 
   @Getter
@@ -70,7 +68,5 @@ public class HttpClientProperties {
     private Duration readTimeout = Duration.ofSeconds(HTTP_READ_TIMEOUT);
     @DurationUnit(ChronoUnit.SECONDS)
     private Duration callTimeout = Duration.ofSeconds(HTTP_READ_TIMEOUT);
-
   }
-
 }

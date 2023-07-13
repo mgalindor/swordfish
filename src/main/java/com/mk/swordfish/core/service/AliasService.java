@@ -1,8 +1,8 @@
 package com.mk.swordfish.core.service;
 
-import com.mk.swordfish.core.domain.AliasDO;
+import com.mk.swordfish.core.domain.AliasDo;
 
 public interface AliasService {
 
-  AliasDO createAlias(AliasDO alias);
+  AliasDo createAlias(AliasDo alias);
 }

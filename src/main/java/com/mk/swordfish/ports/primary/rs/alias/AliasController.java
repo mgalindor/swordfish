@@ -2,7 +2,7 @@ package com.mk.swordfish.ports.primary.rs.alias;
 
 import static com.mk.swordfish.ports.primary.rs.alias.ReqResp.CreateAlias;
 
-import com.mk.swordfish.core.domain.AliasDO;
+import com.mk.swordfish.core.domain.AliasDo;
 import com.mk.swordfish.core.service.AliasService;
 import io.micrometer.core.annotation.Timed;
 import javax.validation.Valid;
@@ -25,7 +25,7 @@ public class AliasController {
 
   @PostMapping
   public ReqResp.ResponseId createAlias(@RequestBody @Valid CreateAlias createAlias) {
-    AliasDO alias = aliasService.createAlias(reqMapper.fromRequest(createAlias));
+    AliasDo alias = aliasService.createAlias(reqMapper.fromRequest(createAlias));
     return new ReqResp.ResponseId(alias.getId());
   }
 

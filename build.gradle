@@ -1,25 +1,27 @@
 plugins {
-    id 'org.springframework.boot' version '2.7.5'
-    id 'io.spring.dependency-management' version '1.0.15.RELEASE'
-    //id 'com.gorylenko.gradle-git-properties' version '2.4.0'
-    id "com.palantir.docker" version "0.22.1"
     id 'java'
+    id 'jacoco'
+    id 'checkstyle'
+    id 'pmd'
+    id "org.owasp.dependencycheck" version "7.4.1"
+    id 'org.cyclonedx.bom' version '1.7.2'
+    id "com.palantir.docker" version "0.34.0"
+    id "com.diffplug.spotless" version "6.18.0"
+
+    id 'org.springframework.boot' version '2.7.6'
+    id 'io.spring.dependency-management' version '1.1.0'
+    id 'com.gorylenko.gradle-git-properties' version '2.4.0'
 }
 
 group = 'com.mk'
-version = '1.0.0'
 sourceCompatibility = "17"
 
-configurations {
-    compileOnly {
-        extendsFrom annotationProcessor
-    }
+repositories {
+    mavenCentral()
 }
 
-repositories { mavenCentral() }
-
 ext {
-    set('springCloudVersion', "2021.0.4")
+    set('springCloudVersion', "2021.0.5")
     set('mapstructVersion', "1.5.3.Final")
     set('xidVersion', "1.0.0")
 }
@@ -27,6 +29,7 @@ ext {
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.cloud:spring-cloud-starter-sleuth'
@@ -87,8 +90,17 @@ compileJava {
     options.compilerArgs += ['-Amapstruct.defaultComponentModel=spring']
 }
 
-tasks.named('test') {
+pmd {
+    ruleSets = ["rulesets/java/quickstart.xml"]
+}
+
+test {
     useJUnitPlatform()
+    finalizedBy jacocoTestReport
+}
+
+build{
+    finalizedBy cyclonedxBom
 }
 
 docker {
@@ -97,4 +109,20 @@ docker {
     dockerfile file("$projectDir/Dockerfile")
 }
 
-task npm_lint(type:Exec) {commandLine 'cmd', '/c', 'init.bat'}
+spotless {
+    java {
+        //importOrder()
+
+        removeUnusedImports()
+        trimTrailingWhitespace()
+        googleJavaFormat()
+    }
+}
+
+tasks.register('npmLint', Exec) {commandLine 'cmd', '/c', 'init_npm.bat'}
+
+/*
+Similar as above, in contrast this form waste resources creating
+a function that probably wont be used while build
+ */
+//task npmLint(type:Exec) {commandLine 'cmd', '/c', 'init_npm.bat'}

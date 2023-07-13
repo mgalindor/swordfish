@@ -20,7 +20,6 @@ public class TransactionManagerConfiguration {
     RuleBasedTransactionAttribute readOnlyAttribute = new RuleBasedTransactionAttribute();
     readOnlyAttribute.setReadOnly(true);
 
-
     NameMatchTransactionAttributeSource source = new NameMatchTransactionAttributeSource();
     source.addTransactionalMethod("get*", readOnlyAttribute);
     source.addTransactionalMethod("find*", readOnlyAttribute);
@@ -28,7 +27,8 @@ public class TransactionManagerConfiguration {
     source.addTransactionalMethod("load*", readOnlyAttribute);
     source.addTransactionalMethod("*", new RuleBasedTransactionAttribute());
 
-    BeanFactoryTransactionAttributeSourceAdvisor advisor = new BeanFactoryTransactionAttributeSourceAdvisor();
+    BeanFactoryTransactionAttributeSourceAdvisor advisor =
+        new BeanFactoryTransactionAttributeSourceAdvisor();
     advisor.setTransactionAttributeSource(source);
     advisor.setAdvice(new TransactionInterceptor(transactionManager, source));
     advisor.setClassFilter(clazz -> AnnotationUtils.findAnnotation(clazz, Behavior.class) != null);

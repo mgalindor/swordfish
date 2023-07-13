@@ -2,7 +2,6 @@ package com.mk.swordfish.ports.secondary.jpa.entity;
 
 import java.io.Serializable;
 import java.nio.ByteBuffer;
-import java.util.Base64;
 import java.util.UUID;
 import org.apache.commons.codec.binary.Base32;
 import org.hibernate.HibernateException;

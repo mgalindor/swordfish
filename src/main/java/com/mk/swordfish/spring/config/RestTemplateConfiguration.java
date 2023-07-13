@@ -32,7 +32,8 @@ public class RestTemplateConfiguration {
   @Bean
   @ConditionalOnProperty(name = "httpclient.type", havingValue = "java", matchIfMissing = true)
   RestTemplateCustomizer javaRestTemplateCustomizer(HttpClientProperties httpClientProperties) {
-    log.info("####################  UrlConnection rest template configuration  ####################");
+    log.info(
+        "####################  UrlConnection rest template configuration  ####################");
     HttpClientProperties.UrlConnection config = httpClientProperties.getUrlConnection();
 
     SimpleClientHttpRequestFactory clientFactory = new SimpleClientHttpRequestFactory();
@@ -43,10 +44,13 @@ public class RestTemplateConfiguration {
 
   @Bean
   @ConditionalOnProperty(name = "httpclient.type", havingValue = "basicApache")
-  RestTemplateCustomizer basicApacheRestTemplateCustomizer(HttpClientProperties httpClientProperties) {
-    log.info("####################  Basic Apache rest template configuration  ####################");
+  RestTemplateCustomizer basicApacheRestTemplateCustomizer(
+      HttpClientProperties httpClientProperties) {
+    log.info(
+        "####################  Basic Apache rest template configuration  ####################");
 
-    HttpComponentsClientHttpRequestFactory requestFactory = new HttpComponentsClientHttpRequestFactory();
+    HttpComponentsClientHttpRequestFactory requestFactory =
+        new HttpComponentsClientHttpRequestFactory();
 
     return restTemplate -> restTemplate.setRequestFactory(
         requestFactory);
@@ -82,8 +86,9 @@ public class RestTemplateConfiguration {
       HttpClientProperties httpClientProperties) {
     HttpClientProperties.HttpClient config = httpClientProperties.getHttpClient();
 
-    PoolingHttpClientConnectionManager poolingConnectionManager = new PoolingHttpClientConnectionManager(
-        config.getDefaultKeepAlive().toSeconds(), TimeUnit.SECONDS);
+    PoolingHttpClientConnectionManager poolingConnectionManager =
+        new PoolingHttpClientConnectionManager(
+            config.getDefaultKeepAlive().toSeconds(), TimeUnit.SECONDS);
     poolingConnectionManager.setDefaultMaxPerRoute(config.getMaxPerRoute());
     poolingConnectionManager.setMaxTotal(config.getMaxTotal());
     return poolingConnectionManager;

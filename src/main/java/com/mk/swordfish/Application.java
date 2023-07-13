@@ -7,7 +7,9 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
 
 @SpringBootApplication
-@ComponentScan(includeFilters = @ComponentScan.Filter(type = FilterType.ANNOTATION, value = Behavior.class))
+@ComponentScan(
+    includeFilters = @ComponentScan.Filter(type = FilterType.ANNOTATION, value = Behavior.class))
+@SuppressWarnings("PMD.UseUtilityClass")
 public class Application {
 
   public static void main(String[] args) {

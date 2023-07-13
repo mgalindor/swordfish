@@ -7,20 +7,20 @@ import lombok.Data;
 import org.javamoney.moneta.Money;
 
 @Data
-public class AliasDO {
+public class AliasDo {
 
   private String id;
   private String firstname;
   private String lastname;
   private LocalDate dob;
-  private IdentityDocumentDO identityDocument;
+  private IdentityDocumentDo identityDocument;
   private List<String> aliases;
-  private List<AccountDO> accounts;
-  private List<ChannelDO> channels;
+  private List<AccountDo> accounts;
+  private List<ChannelDo> channels;
 
 
   @Data
-  public static class AccountDO {
+  public static class AccountDo {
 
     private String number;
     private String type;
@@ -29,14 +29,14 @@ public class AliasDO {
   }
 
   @Data
-  public static class ChannelDO {
+  public static class ChannelDo {
 
     private String value;
     private String type;
   }
 
   @Data
-  public static class IdentityDocumentDO {
+  public static class IdentityDocumentDo {
 
     private String value;
     private String type;

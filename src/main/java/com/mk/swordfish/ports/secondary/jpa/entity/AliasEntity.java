@@ -28,7 +28,8 @@ public class AliasEntity {
   //@GenericGenerator(name = "uuid", strategy = "uuid")
   //@GeneratedValue(strategy = GenerationType.IDENTITY, generator = "uuid")
   @GeneratedValue(generator = "generator")
-  @GenericGenerator(name = "generator", strategy = "com.mk.swordfish.ports.secondary.jpa.entity.XidGenerator")
+  @GenericGenerator(name = "generator",
+      strategy = "com.mk.swordfish.ports.secondary.jpa.entity.XidGenerator")
   private String id;
   private String firstname;
   private String lastname;
